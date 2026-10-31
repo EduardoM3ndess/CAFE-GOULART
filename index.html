@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAFÉ GOULART — Origem Especial</title>
+  <meta name="description" content="Todo grande café tem uma origem. Experiência digital cinematográfica." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <span class="loader-brand">CAFÉ GOULART</span>
+    <div class="loader-track"><div id="loader-bar" class="loader-bar"></div></div>
+  </div>
+
+  <!-- HEADER -->
+  <header id="site-header" class="site-header header--transparent">
+    <div class="header-inner">
+      <a href="#" class="header-logo">CAFÉ GOULART</a>
+      <nav class="header-nav">
+        <a href="#essencia">Nossa Essência</a>
+        <a href="#vitrine">Nosso Café</a>
+        <a href="#torra">A Torra</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu hidden">
+      <a href="#essencia">Nossa Essência</a>
+      <a href="#vitrine">Nosso Café</a>
+      <a href="#torra">A Torra</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </header>
+
+  <!-- HERO CINEMATIC -->
+  <section id="hero-cinematic" class="cinematic-section">
+    <canvas id="frame-canvas" class="cinematic-canvas"></canvas>
+    <div class="hero-overlay">
+      <h1 class="hero-title">CAFÉ GOULART</h1>
+      <p class="hero-subtitle">"Todo grande café começa muito antes da primeira xícara."</p>
+    </div>
+    <div class="scroll-indicator">
+      <span>Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- GRÃO FLUTUANTE -->
+  <img id="floating-bean" src="img/grao%20sem%20fundo/grao-removebg-preview.png" alt="" class="floating-bean" aria-hidden="true" />
+
+  <!-- VITRINE -->
+  <section id="vitrine" class="vitrine-section">
+    <div class="vitrine-inner">
+      <span class="section-label">Nossos Cafés</span>
+      <h2 class="section-title">Da origem à sua mesa</h2>
+      <div class="vitrine-grid">
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#34251C"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#D8C5A5" font-family="serif" font-size="24">Origem Selecionada</text></svg>
+          </div>
+          <h3>Origem Selecionada</h3>
+          <p>Minas Gerais · Arábica · Natural</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#60432E"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#F1E9DC" font-family="serif" font-size="24">Reserva Especial</text></svg>
+          </div>
+          <h3>Reserva Especial</h3>
+          <p>Cerrado Mineiro · Bourbon · Lavado</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#344438"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#D8C5A5" font-family="serif" font-size="24">Edição Limitada</text></svg>
+          </div>
+          <h3>Edição Limitada</h3>
+          <p>Mantiqueira · Catuaí · Honey</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TORREFAÇÃO CINEMATIC -->
+  <section id="torrefacao-cinematic" class="cinematic-section">
+    <canvas id="torrefacao-canvas" class="cinematic-canvas"></canvas>
+
+    <!-- MOMENTO 1 — Grãos verdes chegam -->
+    <div class="torra-narrative torra-moment-1">
+      <h2 class="torra-title">FAZENDA JANGADA</h2>
+      <p class="torra-text">Uma história construída com dedicação, tradição e amor pelo café.</p>
+    </div>
+
+    <!-- MOMENTO 2 — Aquecimento -->
+    <div class="torra-narrative torra-moment-2">
+      <h2 class="torra-title">UMA HISTÓRIA DE LEGADO</h2>
+      <p class="torra-text">Uma homenagem ao legado de trabalho da matriarca da família, cuja dedicação inspira a história e a identidade da Fazenda Jangada.</p>
+    </div>
+
+    <!-- MOMENTO 3 — Grãos entram no tambor -->
+    <div class="torra-narrative torra-moment-3">
+      <h2 class="torra-title">NASCE O CAFÉ GOULART</h2>
+      <p class="torra-text">Mais do que café, uma expressão da história de uma família e do cuidado presente em cada etapa da produção.</p>
+    </div>
+
+    <!-- MOMENTO 4 — Tambor gira -->
+    <div class="torra-narrative torra-moment-4">
+      <h2 class="torra-title">A ARTE DA TORRA</h2>
+      <p class="torra-text">É durante a torra que os grãos revelam suas características. Um processo que exige atenção, cuidado e respeito à essência do café.</p>
+    </div>
+
+    <!-- MOMENTO 5 — Apresentação final -->
+    <div class="torra-narrative torra-moment-5">
+      <h2 class="torra-title">FAZENDA JANGADA. CAFÉ GOULART.</h2>
+      <p class="torra-text">Conheça nossos cafés e descubra uma história que merece ser apreciada em cada xícara.</p>
+      <a href="#vitrine" class="torra-cta">CONHEÇA NOSSOS CAFÉS</a>
+    </div>
+  </section>
+
+  <!-- NOSSA ESSÊNCIA -->
+  <section id="essencia" class="content-section">
+    <div class="content-grid-2">
+      <div class="reveal-up">
+        <span class="section-label">Filosofia</span>
+        <h2 class="section-title">Mais do que café.<br/>Uma história de origem.</h2>
+        <p class="section-body">Acreditamos que um grande café começa muito antes da torra. Ele nasce na terra, cresce com o cuidado de quem cultiva e ganha personalidade em cada etapa.</p>
+      </div>
+      <div class="reveal-up delay-200">
+        <div class="img-frame-3-4">
+          <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="300" height="400" fill="#34251C"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#D8C5A5" font-family="serif" font-size="20">Fotografia Editorial</text></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A ARTE DA TORRA -->
+  <section id="torra" class="torra-section">
+    <div class="content-grid-2">
+      <div class="reveal-up">
+        <span class="section-label section-label-light">Artesanato</span>
+        <h2 class="section-title text-light">É na torra que a origem revela sua personalidade.</h2>
+        <p class="section-body text-light-70">Cada lote é tratado como único. Temperaturas, tempos e curvas são ajustados com precisão para extrair o melhor de cada grão.</p>
+      </div>
+      <div class="reveal-up delay-200">
+        <div class="img-frame-4-3">
+          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="#60432E"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#F1E9DC" font-family="serif" font-size="20">Torrefação Artesanal</text></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="contact-section">
+    <div class="reveal-up">
+      <span class="section-label">Converse conosco</span>
+      <h2 class="section-title">Contato</h2>
+      <p class="section-body mb-12">Para parcerias ou informações sobre nossos cafés, entre em contato.</p>
+      <a href="mailto:" class="contact-link">email@cafegoulart.com.br</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">CAFÉ GOULART</span>
+      <p>&copy; 2026 CAFÉ GOULART. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

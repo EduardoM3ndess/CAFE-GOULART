@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORIGEM — Café Especial Brasileiro</title>
+  <meta name="description"
+    content="Todo grande café tem uma origem. Experiência digital cinematográfica da marca ORIGEM." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ============================================
+   ORIGEM — Premium Coffee Experience
+   Design System & Layout
+   ============================================ */
+
+    /* --- Custom Properties (Design Tokens) --- */
+    :root {
+      --color-coffee-deep: #17130F;
+      --color-espresso: #34251C;
+      --color-wood: #60432E;
+      --color-beige: #D8C5A5;
+      --color-cream: #F1E9DC;
+      --color-warm-white: #F8F5EF;
+      --color-green: #344438;
+
+      --font-serif: 'Playfair Display', serif;
+      --font-sans: 'Inter', sans-serif;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    /* --- Base Reset & Typography --- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: auto;
+      /* GSAP handles smoothness */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-warm-white);
+      color: var(--color-coffee-deep);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Utility classes mapped to tokens */
+    .bg-warm-white {
+      background-color: var(--color-warm-white);
+    }
+
+    .bg-coffee-deep {
+      background-color: var(--color-coffee-deep);
+    }
+
+    .bg-cream {
+      background-color: var(--color-cream);
+    }
+
+    .bg-beige-natural {
+      background-color: var(--color-beige);
+    }
+
+    .text-coffee-deep {
+      color: var(--color-coffee-deep);
+    }
+
+    .text-warm-white {
+      color: var(--color-warm-white);
+    }
+
+    .text-espresso {
+      color: var(--color-espresso);
+    }
+
+    .font-serif {
+      font-family: var(--font-serif);
+    }
+
+    .font-sans {
+      font-family: var(--font-sans);
+    }
+
+    /* --- Header / Nav --- */
+    .header--transparent {
+      background: transparent;
+    }
+
+    .header--solid {
+      background: rgba(23, 19, 15, 0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    /* --- Hero Cinematic Section --- */
+    #hero-cinematic {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: var(--color-coffee-deep);
+    }
+
+    #frame-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Floating Bean */
+    .floating-bean {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: auto;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+      will-change: transform, opacity;
+    }
+
+    @media (min-width: 768px) {
+      .floating-bean {
+        width: 200px;
+      }
+    }
+
+    /* Loader */
+    #loader {
+      position: absolute;
+      inset: 0;
+      z-index: 100;
+      background: var(--color-coffee-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s var(--ease-out);
+    }
+
+    #loader.loaded {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* --- Vitrine Section --- */
+    .vitrine-section {
+      position: relative;
+      min-height: 100vh;
+      background: var(--color-warm-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 1.5rem;
+      overflow: hidden;
+    }
+
+    .vitrine-inner {
+      max-width: 80rem;
+      width: 100%;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .vitrine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    .vitrine-card {
+      background: var(--color-cream);
+      padding: 2rem;
+      border-radius: 2px;
+      transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+    }
+
+    .vitrine-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(23, 19, 15, 0.08);
+    }
+
+    .vitrine-img-wrap {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      background: var(--color-beige);
+    }
+
+    .vitrine-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+
+    .vitrine-card:hover .vitrine-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .vitrine-btn {
+      margin-top: 1rem;
+      padding: 0.75rem 2rem;
+      background: var(--color-coffee-deep);
+      color: var(--color-warm-white);
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .vitrine-btn:hover {
+      background: var(--color-espresso);
+    }
+
+    /* --- Torrefação Cinematic Section --- */
+    .torrefacao-section {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      background: var(--color-coffee-deep);
+    }
+
+    .torrefacao-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .torrefacao-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      padding: 2rem;
+    }
+
+    .torrefacao-text {
+      opacity: 0;
+      transform: translateY(30px);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- Reveal Animations --- */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+    }
+
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-200 {
+      transition-delay: 0.2s;
+    }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 767px) {
+      .vitrine-section {
+        padding: 4rem 1.5rem;
+        min-height: auto;
+      }
+
+      .torrefacao-text {
+        font-size: 1.75rem !important;
+      }
+    }
+
+    /* --- Selection Color --- */
+    ::selection {
+      background: var(--color-beige);
+      color: var(--color-coffee-deep);
+    }
+
+    /* --- Smooth Image Loading --- */
+    img {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    img.loaded,
+    img[loading="lazy"] {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="bg-warm-white text-coffee-deep font-sans antialiased">
+
+  <header id="site-header"
+    class="fixed top-0 left-0 w-full z-50 transition-all duration-700 ease-out header--transparent">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+      <a href="#" class="font-serif text-2xl tracking-widest text-warm-white uppercase"
+        aria-label="ORIGEM - Início">ORIGEM</a>
+      <nav class="hidden md:flex gap-8 text-sm tracking-wide text-warm-white/90">
+        <a href="#essencia" class="hover:text-warm-white transition-colors">Nossa Essência</a>
+        <a href="#cafe" class="hover:text-warm-white transition-colors">Nosso Café</a>
+        <a href="#torra" class="hover:text-warm-white transition-colors">A Torra</a>
+        <a href="#contato" class="hover:text-warm-white transition-colors">Contato</a>
+      </nav>
+      <button id="mobile-menu-btn" class="md:hidden text-warm-white" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu"
+      class="hidden absolute top-20 left-0 w-full bg-coffee-deep/95 backdrop-blur-md text-warm-white p-8 flex flex-col gap-6 text-lg font-serif tracking-wide md:hidden">
+      <a href="#essencia">Nossa Essência</a>
+      <a href="#cafe">Nosso Café</a>
+      <a href="#torra">A Torra</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </header>
+
+  <!-- HERO / CINEMATIC SCROLL -->
+  <section id="hero-cinematic" class="relative w-full h-screen overflow-hidden bg-coffee-deep">
+    <canvas id="frame-canvas" class="absolute inset-0 w-full h-full object-cover"></canvas>
+    <img id="floating-bean" src="img/grao sem fundo/grao-removebg-preview.png" alt="" class="floating-bean"
+      aria-hidden="true" />
+    <div id="hero-overlay"
+      class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none z-10">
+      <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-warm-white tracking-[0.15em] opacity-0 hero-title">
+        ORIGEM</h1>
+      <p
+        class="mt-6 font-sans text-sm md:text-base text-warm-white/80 tracking-widest max-w-md opacity-0 hero-subtitle">
+        "Todo grande café começa muito antes da primeira xícara."</p>
+    </div>
+    <div id="scroll-indicator"
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-warm-white/60 opacity-0 hero-scroll-hint z-10">
+      <span class="text-xs tracking-[0.3em] uppercase">Explore</span>
+      <div class="w-px h-10 bg-gradient-to-b from-warm-white/60 to-transparent animate-pulse"></div>
+    </div>
+    <div id="loader"
+      class="absolute inset-0 z-50 bg-coffee-deep flex flex-col items-center justify-center transition-opacity duration-1000">
+      <span class="font-serif text-2xl text-warm-white tracking-[0.2em] mb-4">ORIGEM</span>
+      <div class="w-48 h-px bg-warm-white/20 relative overflow-hidden">
+        <div id="loader-bar" class="absolute left-0 top-0 h-full bg-warm-white/80 w-0 transition-all duration-300">
+        </div>
+      </div>
+      <span id="loader-text" class="mt-3 text-xs text-warm-white/50 tracking-widest">Carregando experiência...</span>
+    </div>
+  </section>
+
+  <!-- VITRINE -->
+  <section id="vitrine" class="vitrine-section">
+    <div class="vitrine-inner">
+      <span class="text-xs tracking-[0.3em] uppercase text-espresso/60 mb-4 block vitrine-label">Nossos Cafés</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-coffee-deep mb-12 vitrine-title">Da origem à sua mesa</h2>
+      <div class="vitrine-grid">
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap"><img src="img/grao.jpg" alt="Origem Selecionada" loading="lazy" /></div>
+          <h3 class="font-serif text-xl text-coffee-deep mt-4 mb-1">Origem Selecionada</h3>
+          <p class="text-xs tracking-[0.2em] uppercase text-espresso/50 mb-3">Minas Gerais · Arábica · Natural</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap"><img src="img/grao.jpg" alt="Reserva Especial" loading="lazy" /></div>
+          <h3 class="font-serif text-xl text-coffee-deep mt-4 mb-1">Reserva Especial</h3>
+          <p class="text-xs tracking-[0.2em] uppercase text-espresso/50 mb-3">Cerrado Mineiro · Bourbon · Lavado</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+        <article class="vitrine-card">
+          <div class="vitrine-img-wrap"><img src="img/grao.jpg" alt="Edição Limitada" loading="lazy" /></div>
+          <h3 class="font-serif text-xl text-coffee-deep mt-4 mb-1">Edição Limitada</h3>
+          <p class="text-xs tracking-[0.2em] uppercase text-espresso/50 mb-3">Mantiqueira · Catuaí · Honey</p>
+          <button class="vitrine-btn">Ver detalhes</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TORREFAÇÃO CINEMATIC -->
+  <section id="torrefacao-cinematic" class="torrefacao-section">
+    <canvas id="torrefacao-canvas" class="torrefacao-canvas"></canvas>
+    <div class="torrefacao-overlay">
+      <p class="torrefacao-text font-serif text-3xl md:text-5xl text-warm-white tracking-wide">O calor
+        transforma.<br />A origem permanece.</p>
+    </div>
+  </section>
+
+  <!-- NOSSA ESSÊNCIA -->
+  <section id="essencia" class="py-32 md:py-48 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="reveal-up">
+        <span class="text-xs tracking-[0.3em] uppercase text-espresso/60 mb-4 block">Filosofia</span>
+        <h2 class="font-serif text-4xl md:text-5xl text-coffee-deep leading-tight mb-8">Mais do que café.<br />Uma
+          história de origem.</h2>
+        <p class="font-sans text-lg text-espresso/80 leading-relaxed max-w-lg">Acreditamos que um grande café começa
+          muito antes da torra. Ele nasce na terra, cresce com o cuidado de quem cultiva e ganha personalidade em cada
+          etapa de sua transformação.</p>
+      </div>
+      <div class="relative reveal-up delay-200">
+        <div class="aspect-[3/4] bg-beige-natural/30 rounded-sm overflow-hidden">
+          <img src="img/02.jpg" alt="Fotografia editorial ORIGEM" class="w-full h-full object-cover" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DA TERRA À XÍCARA -->
+  <section id="jornada" class="py-32 md:py-48 bg-cream">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="mb-20 reveal-up">
+        <span class="text-xs tracking-[0.3em] uppercase text-espresso/60 mb-4 block">Processo</span>
+        <h2 class="font-serif text-4xl md:text-5xl text-coffee-deep">Da terra à xícara</h2>
+      </div>
+      <div class="space-y-24">
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Cultivo</div>
+          </div>
+          <div class="md:col-span-2 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">01</span></div>
+          <div class="md:col-span-5">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Cultivo</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">Nas montanhas de Minas Gerais, onde o solo fértil e o
+              clima ameno criam as condições perfeitas para o café especial.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 md:order-2 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Colheita</div>
+          </div>
+          <div class="md:col-span-2 md:order-1 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">02</span></div>
+          <div class="md:col-span-5 md:order-3">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Colheita</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">Cerejas maduras colhidas à mão no ponto exato,
+              respeitando o ritmo natural de cada planta.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Seleção</div>
+          </div>
+          <div class="md:col-span-2 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">03</span></div>
+          <div class="md:col-span-5">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Seleção</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">Grãos criteriosamente separados por densidade, tamanho
+              e maturação para garantir uniformidade.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 md:order-2 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Processamento</div>
+          </div>
+          <div class="md:col-span-2 md:order-1 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">04</span></div>
+          <div class="md:col-span-5 md:order-3">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Processamento</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">Secagem lenta e controlada, preservando os açúcares
+              naturais e desenvolvendo complexidade aromática.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Torrefação</div>
+          </div>
+          <div class="md:col-span-2 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">05</span></div>
+          <div class="md:col-span-5">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Torrefação</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">Curvas de torra precisas que revelam a personalidade
+              única de cada lote sem mascarar sua origem.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-12 gap-8 items-center reveal-up">
+          <div class="md:col-span-5 md:order-2 aspect-[4/3] bg-beige-natural/20 rounded-sm overflow-hidden">
+            <div
+              class="w-full h-full flex items-center justify-center text-espresso/30 text-sm tracking-widest uppercase">
+              Experiência</div>
+          </div>
+          <div class="md:col-span-2 md:order-1 flex justify-center"><span
+              class="font-serif text-6xl text-beige-natural/40">06</span></div>
+          <div class="md:col-span-5 md:order-3">
+            <h3 class="font-serif text-2xl text-coffee-deep mb-4">Experiência na xícara</h3>
+            <p class="font-sans text-espresso/70 leading-relaxed">O momento final: aroma, corpo, acidez e doçura
+              equilibrados em uma bebida que conta sua história.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A ARTE DA TORRA -->
+  <section id="torra" class="py-32 md:py-48 bg-coffee-deep text-warm-white">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="reveal-up">
+          <span class="text-xs tracking-[0.3em] uppercase text-warm-white/40 mb-4 block">Artesanato</span>
+          <h2 class="font-serif text-4xl md:text-5xl leading-tight mb-8">É na torra que a origem revela sua
+            personalidade.</h2>
+          <p class="font-sans text-lg text-warm-white/70 leading-relaxed max-w-lg">Cada lote é tratado como único.
+            Temperaturas, tempos e curvas são ajustados com precisão para extrair o melhor de cada grão, honrando todo o
+            trabalho que veio antes.</p>
+        </div>
+        <div class="relative reveal-up delay-200">
+          <div class="aspect-[4/3] bg-espresso/30 rounded-sm overflow-hidden">
+            <img src="img/torra.jpg" alt="Processo de torrefação artesanal ORIGEM"
+              class="w-full h-full object-cover opacity-90" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="py-32 md:py-48 px-6 md:px-12 max-w-3xl mx-auto text-center">
+    <div class="reveal-up">
+      <span class="text-xs tracking-[0.3em] uppercase text-espresso/60 mb-4 block">Converse conosco</span>
+      <h2 class="font-serif text-4xl md:text-5xl text-coffee-deep mb-8">Contato</h2>
+      <p class="font-sans text-lg text-espresso/70 leading-relaxed mb-12">Para parcerias, informações sobre nossos cafés
+        ou qualquer outra questão,<br />entre em contato conosco.</p>
+      <a href="mailto:"
+        class="inline-block border-b border-coffee-deep pb-1 text-coffee-deep font-serif text-xl tracking-wide hover:text-espresso transition-colors">email@origem.com.br</a>
+    </div>
+  </section>
+
+  <footer class="py-12 px-6 md:px-12 border-t border-espresso/10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <span class="font-serif text-lg tracking-widest text-coffee-deep uppercase">ORIGEM</span>
+      <p class="text-xs text-espresso/40 tracking-wide">&copy; 2026 ORIGEM. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+  <script>
+    /**
+ * ORIGEM — Cinematic Coffee Experience
+ * Multi-phase scroll architecture:
+ *   Phase 1: Hero cinematic (356 frames) + floating bean travel
+ *   Phase 2: Product vitrine reveal
+ *   Phase 3: Torrefação cinematic (188 frames) with text overlay
+ */
+
+    // ─── Configuration ───────────────────────────────────────────────
+    const CONFIG = {
+      hero: {
+        totalFrames: 356,
+        framePath: 'img/frames/frame_',
+        preloadBatchSize: 20,
+        criticalFrames: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        scrollMultiplier: 5, // px per frame
+      },
+      torrefacao: {
+        totalFrames: 188,
+        framePath: 'img/torrefacao/frame_',
+        preloadBatchSize: 15,
+        criticalFrames: [1, 2, 3, 4, 5],
+        scrollMultiplier: 6,
+      },
+      bean: {
+        src: 'img/grao sem fundo/grao-removebg-preview.png',
+        // Scroll progress thresholds within hero section
+        appearAt: 0.55,   // bean fades in at 55% of hero scroll
+        travelEnd: 0.85,  // bean reaches vitrine position at 85%
+        fadeOutEnd: 0.95, // bean fully gone before torrefação
+      },
+    };
+
+    // ─── Utility ─────────────────────────────────────────────────────
+    function frameUrl(prefix, index) {
+      const num = String(index).padStart(6, '0');
+      return `${prefix}${num}.png`;
+    }
+
+    // ─── Generic Frame Preloader ─────────────────────────────────────
+    class FramePreloader {
+      constructor(config, onProgress, onComplete) {
+        this.config = config;
+        this.images = new Map();
+        this.loadedCount = 0;
+        this.total = config.totalFrames;
+        this.onProgress = onProgress;
+        this.onComplete = onComplete;
+        this.queue = [];
+        this.loading = false;
+      }
+
+      start() {
+        const criticalSet = new Set(this.config.criticalFrames);
+        const deferred = [];
+        for (let i = 1; i <= this.total; i++) {
+          if (criticalSet.has(i)) this._loadFrame(i);
+          else deferred.push(i);
+        }
+        for (let i = 0; i < deferred.length; i += this.config.preloadBatchSize) {
+          this.queue.push(...deferred.slice(i, i + this.config.preloadBatchSize));
+        }
+        this._processQueue();
+      }
+
+      _processQueue() {
+        if (this.loading || this.queue.length === 0) return;
+        this.loading = true;
+        const batch = this.queue.splice(0, this.config.preloadBatchSize);
+        let done = 0;
+        batch.forEach(idx => {
+          this._loadFrame(idx, () => { if (++done === batch.length) { this.loading = false; this._processQueue(); } });
+        });
+      }
+
+      _loadFrame(index, cb) {
+        if (this.images.has(index)) { this.loadedCount++; this._report(cb); return; }
+        const img = new Image();
+        img.src = frameUrl(this.config.framePath, index);
+        img.decoding = 'async';
+        const finish = () => { this.images.set(index, img); this.loadedCount++; this._report(cb); };
+        img.onload = finish;
+        img.onerror = () => { console.warn(`[ORIGEM] Frame load failed: ${index}`); finish(); };
+      }
+
+      _report(cb) {
+        this.onProgress?.(this.loadedCount, this.total);
+        if (this.loadedCount >= this.total) this.onComplete?.();
+        cb?.();
+      }
+
+      getFrame(index) {
+        if (this.images.has(index)) return this.images.get(index);
+        for (let d = 1; d <= 10; d++) {
+          if (this.images.has(index - d)) return this.images.get(index - d);
+          if (this.images.has(index + d)) return this.images.get(index + d);
+        }
+        return null;
+      }
+    }
+
+    // ─── Canvas Renderer ─────────────────────────────────────────────
+    class CinematicCanvas {
+      constructor(canvasEl, preloader, totalFrames) {
+        this.canvas = canvasEl;
+        this.ctx = canvasEl.getContext('2d', { alpha: false });
+        this.preloader = preloader;
+        this.totalFrames = totalFrames;
+        this.currentFrame = 1;
+        this._resize();
+        window.addEventListener('resize', () => this._resize());
+      }
+
+      _resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        this.ctx.scale(dpr, dpr);
+        this._draw(this.currentFrame);
+      }
+
+      _draw(index) {
+        const img = this.preloader.getFrame(index);
+        if (!img) return;
+        const cw = this.canvas.getBoundingClientRect().width;
+        const ch = this.canvas.getBoundingClientRect().height;
+        const ir = img.naturalWidth / img.naturalHeight;
+        const cr = cw / ch;
+        let dw, dh, dx, dy;
+        if (ir > cr) { dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0; }
+        else { dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2; }
+        this.ctx.drawImage(img, dx, dy, dw, dh);
+        this.currentFrame = index;
+      }
+
+      seekTo(progress) {
+        const idx = Math.max(1, Math.min(this.totalFrames, Math.round(1 + progress * (this.totalFrames - 1))));
+        if (idx !== this.currentFrame) this._draw(idx);
+      }
+    }
+
+    // ─── Floating Bean Controller ────────────────────────────────────
+    class FloatingBean {
+      constructor() {
+        this.el = document.getElementById('floating-bean');
+        this.proxy = { x: 0, y: 0, opacity: 0, scale: 0.6, rotation: 0 };
+      }
+
+      init(heroSection) {
+        if (!this.el) return;
+        const cfg = CONFIG.bean;
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: heroSection,
+            start: 'top top',
+            end: `+=${CONFIG.hero.totalFrames * CONFIG.hero.scrollMultiplier}`,
+            scrub: 0.3,
+          }
+        });
+
+        // Phase A: appear and float upward from center-bottom
+        tl.to(this.proxy, {
+          opacity: 1, scale: 1, y: -15, rotation: 10,
+          duration: cfg.appearAt,
+          ease: 'none',
+          onUpdate: () => this._apply(),
+        }, 0);
+
+        // Phase B: travel across screen toward vitrine area
+        tl.to(this.proxy, {
+          x: 80, y: -60, rotation: -15, scale: 1.1,
+          duration: cfg.travelEnd - cfg.appearAt,
+          ease: 'none',
+          onUpdate: () => this._apply(),
+        }, cfg.appearAt);
+
+        // Phase C: fade out before torrefação
+        tl.to(this.proxy, {
+          opacity: 0, scale: 0.8, y: -80,
+          duration: cfg.fadeOutEnd - cfg.travelEnd,
+          ease: 'none',
+          onUpdate: () => this._apply(),
+        }, cfg.travelEnd);
+      }
+
+      _apply() {
+        if (!this.el) return;
+        this.el.style.opacity = this.proxy.opacity;
+        this.el.style.transform = `translate(calc(-50% + ${this.proxy.x}px), calc(-50% + ${this.proxy.y}px)) scale(${this.proxy.scale}) rotate(${this.proxy.rotation}deg)`;
+      }
+    }
+
+    // ─── Vitrine Reveal ──────────────────────────────────────────────
+    function initVitrine() {
+      const inner = document.querySelector('.vitrine-inner');
+      if (!inner) return;
+      gsap.to(inner, {
+        opacity: 1, y: 0, duration: 1.2, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#vitrine',
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+
+      // Stagger cards
+      gsap.from('.vitrine-card', {
+        opacity: 0, y: 50, stagger: 0.15, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.vitrine-grid',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+    }
+
+    // ─── Torrefação Sequence ─────────────────────────────────────────
+    function initTorrefacao() {
+      const canvasEl = document.getElementById('torrefacao-canvas');
+      const section = document.getElementById('torrefacao-cinematic');
+      if (!canvasEl || !section) return;
+
+      const preloader = new FramePreloader(CONFIG.torrefacao);
+      const canvas = new CinematicCanvas(canvasEl, preloader, CONFIG.torrefacao.totalFrames);
+
+      // Start loading torrefação frames after hero critical frames are done
+      preloader.start();
+
+      // Pin and scrub the torrefação canvas
+      const proxy = { progress: 0 };
+      gsap.to(proxy, {
+        progress: 1, ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${CONFIG.torrefacao.totalFrames * CONFIG.torrefacao.scrollMultiplier}`,
+          pin: true,
+          scrub: 0.15,
+          anticipatePin: 1,
+          onUpdate: (self) => canvas.seekTo(self.progress),
+        }
+      });
+
+      // Text overlay fade-in at ~40% of torrefação scroll
+      gsap.to('.torrefacao-text', {
+        opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: `top+=${CONFIG.torrefacao.totalFrames * CONFIG.torrefacao.scrollMultiplier * 0.35} top`,
+          toggleActions: 'play none none reverse',
+        }
+      });
+    }
+
+    // ─── Hero Cinematic Scroll ───────────────────────────────────────
+    function initHeroScroll(canvas) {
+      const section = document.getElementById('hero-cinematic');
+      const cfg = CONFIG.hero;
+      const proxy = { progress: 0 };
+
+      gsap.to(proxy, {
+        progress: 1, ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${cfg.totalFrames * cfg.scrollMultiplier}`,
+          pin: true,
+          scrub: 0.1,
+          anticipatePin: 1,
+          onUpdate: (self) => canvas.seekTo(self.progress),
+        }
+      });
+
+      // Fade hero text early
+      gsap.to('#hero-overlay', {
+        opacity: 0,
+        scrollTrigger: { trigger: section, start: 'top top', end: `+=${cfg.totalFrames * cfg.scrollMultiplier * 0.15}`, scrub: true }
+      });
+      gsap.to('#scroll-indicator', {
+        opacity: 0,
+        scrollTrigger: { trigger: section, start: 'top top', end: `+=${cfg.totalFrames * cfg.scrollMultiplier * 0.08}`, scrub: true }
+      });
+    }
+
+    // ─── Section Reveals ─────────────────────────────────────────────
+    function initReveals() {
+      document.querySelectorAll('.reveal-up').forEach(el => {
+        const observer = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { el.classList.add('is-visible'); observer.unobserve(el); }
+        }, { threshold: 0.15 });
+        observer.observe(el);
+      });
+    }
+
+    // ─── Navigation ──────────────────────────────────────────────────
+    function initNav() {
+      const header = document.getElementById('site-header');
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+
+      ScrollTrigger.create({
+        start: 80,
+        onUpdate: (self) => {
+          if (self.scroll() > 80) { header.classList.remove('header--transparent'); header.classList.add('header--solid'); }
+          else { header.classList.add('header--transparent'); header.classList.remove('header--solid'); }
+        }
+      });
+
+      btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+      menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
+    }
+
+    // ─── Loader ──────────────────────────────────────────────────────
+    function initLoader(preloader, canvas) {
+      const loader = document.getElementById('loader');
+      const bar = document.getElementById('loader-bar');
+      const text = document.getElementById('loader-text');
+      let unlocked = false;
+
+      preloader.onProgress = (loaded, total) => {
+        const pct = Math.round((loaded / total) * 100);
+        bar.style.width = `${pct}%`;
+        text.textContent = `Carregando experiência… ${pct}%`;
+        if (!unlocked && loaded >= CONFIG.hero.criticalFrames.length) {
+          unlocked = true;
+          canvas.seekTo(0);
+          requestAnimationFrame(() => canvas.seekTo(0));
+        }
+      };
+
+      preloader.onComplete = () => {
+        gsap.to(loader, {
+          opacity: 0, duration: 0.8, ease: 'power2.inOut',
+          onComplete: () => {
+            loader.style.display = 'none';
+            // Hero text entrance
+            gsap.timeline({ delay: 0.2 })
+              .to('.hero-title', { opacity: 1, duration: 1.6, ease: 'power3.out' })
+              .to('.hero-subtitle', { opacity: 1, duration: 1.2, ease: 'power3.out' }, '-=1')
+              .to('.hero-scroll-hint', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.5');
+          }
+        });
+      };
+    }
+
+    // ─── Bootstrap ───────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero canvas + preloader
+      const heroCanvasEl = document.getElementById('frame-canvas');
+      const heroPreloader = new FramePreloader(CONFIG.hero);
+      const heroCanvas = new CinematicCanvas(heroCanvasEl, heroPreloader, CONFIG.hero.totalFrames);
+
+      initLoader(heroPreloader, heroCanvas);
+      heroPreloader.start();
+
+      initHeroScroll(heroCanvas);
+      new FloatingBean().init(document.getElementById('hero-cinematic'));
+      initVitrine();
+      initTorrefacao();
+      initReveals();
+      initNav();
+
+      // Lazy-load image fade-in
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        if (img.complete) img.classList.add('loaded');
+        else img.addEventListener('load', () => img.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+
+</html>
